@@ -13,10 +13,10 @@ import (
 
 // UploadResp return from Upload File to bucket
 type UploadResp struct {
-	isError bool
-	err     string
-	key     string
-	url     string
+	IsError bool
+	Err     string
+	Key     string
+	Url     string
 }
 
 // Bucket for Handler Static File
@@ -82,8 +82,8 @@ func (d *Domain) Upload(file *multipart.FileHeader, prefix string) (UploadResp, 
 	src, err := file.Open()
 	if err != nil {
 		return UploadResp{
-			isError: true,
-			err:     err.Error(),
+			IsError: true,
+			Err:     err.Error(),
 		}, err
 	}
 	defer src.Close()
@@ -97,16 +97,16 @@ func (d *Domain) Upload(file *multipart.FileHeader, prefix string) (UploadResp, 
 	_, err = d.client.PutObject(params)
 	if err != nil {
 		return UploadResp{
-			isError: true,
-			err:     err.Error(),
+			IsError: true,
+			Err:     err.Error(),
 		}, err
 	}
 
 	return UploadResp{
-		isError: false,
-		err:     "",
-		key:     key,
-		url:     d.getFullURL(key),
+		IsError: false,
+		Err:     "",
+		Key:     key,
+		Url:     d.getFullURL(key),
 	}, nil
 }
 
