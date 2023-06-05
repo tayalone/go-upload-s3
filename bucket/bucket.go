@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"mime/multipart"
-	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -46,8 +45,8 @@ func Initialize(
 	bucketName string,
 ) Bucket {
 	awsSession, err := session.NewSession(&aws.Config{
-		Region:      aws.String(os.Getenv(region)),
-		Credentials: credentials.NewStaticCredentials(os.Getenv(accessKeyID), os.Getenv(secretAccessKey), ""),
+		Region:      aws.String(region),
+		Credentials: credentials.NewStaticCredentials(accessKeyID, secretAccessKey, ""),
 	})
 	if err != nil {
 		log.Fatal(err)

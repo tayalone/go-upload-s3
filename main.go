@@ -12,6 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/gin-gonic/gin"
+	"github.com/tayalone/go-upload-s3/bucket"
 )
 
 func main() {
@@ -30,6 +31,20 @@ func main() {
 	s3Client := s3.New(awsSession)
 
 	fmt.Println("Start")
+
+	myBucket := bucket.Initialize(
+		os.Getenv("AWS_S3_REGION"),
+		os.Getenv("AWS_S3_ACCESS_KEY_ID"),
+		os.Getenv("AWS_S3_SECRET_ACCESS_KEY"),
+		os.Getenv("AWS_S3_BUCKET_NAME"),
+	)
+
+	err = myBucket.Healtz()
+	if err != nil {
+		fmt.Println("bucket err", err.Error())
+	} else {
+		fmt.Println("bucket ok!!")
+	}
 
 	r := gin.Default()
 
